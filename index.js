@@ -40,10 +40,6 @@ d8e.init = function(){
     );
 };
 
-
-
-d8e.cardSerialNumOutput = 'blank-card-search-input';
-
 d8e.httpService = {};
 
 d8e.httpService.url = 'http://127.0.0.1:4320';
@@ -76,27 +72,6 @@ d8e.httpService.getCardNum = function ( url, data ) {
 
 };
 
-d8e.httpService.XDomainRequest = function( url,data,callback,obj ){
-
-    var xdr = new window.XDomainRequest();
-    xdr.onprogress = function() {}; // no aborting
-    xdr.ontimeout = function() {}; // "
-    xdr.onload = function(e) {
-        debugger;
-    };
-    xdr.onerror = function(XMLHttpRequest, textStatus, errorThrown) {
-        debugger;
-        _this.installHttpServer();
-    };
-    xdr.open(this.opts.method, url, true);
-    xdr.send(data);
-};
-
-d8e.getCardSerialNum = function( data, obj ){
-    var url = d8e.httpService.getCardInfo;
-    d8e.httpService.request( url, data, null, obj );
-    // submitCookieTopForm( url, data );
-};
 
 (function($) {
 
