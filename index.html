@@ -3,17 +3,61 @@
 <!-- git: master -->
 <head>
     <meta charset="utf-8">
-    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
     <script src="libs.js"></script>
     <script src="index.js"></script>
+
 </head>
 <body>
-<input type="text" id="blank-card-search-input" title="卡号"/>
-<button id="testBtn">Test ocx.getCardInfo</button>
-<h3>IE v11.253</h3>
-<script type="text/javascript">
 
-</script>
+<!-- Loader -->
+<div class="loader">
+    <div class="loader-img" style="display: none;"></div>
+</div>
+
+<div class="container">
+
+    <div class="row text-center">
+        <div class="col-sm-8 col-sm-offset-2 text wow fadeInUp animated" style="visibility: visible; animation-name: fadeInUp;">
+            <h1>读卡器 Web 页面读卡 <strong>Demo</strong></h1>
+            <div class="description">
+                <p>（ 仅限海康威视 DS-K1F100-D8E 发卡器，仅支持 <strong>IE11</strong> ）</p>
+            </div>
+            <div id="reload" style="display: none;">
+                <button onclick="window.location.reload()" type="button" class="btn btn-success btn-lg">
+                    <span class="glyphicon glyphicon-retweet" aria-hidden="true"></span>
+                    重新读卡
+                </button>
+            </div>
+            <hr>
+            <div id="cardSerialNum_panel">请刷卡 ...</div>
+            <hr>
+            <img src="DS-K1F100-D8E.jpg" width="200">
+        </div>
+    </div>
+
+    <div class="row">
+        <hr>
+        <div>
+            <li>Livon 2019.03</li>
+            <li>159-9810-8505</li>
+        </div>
+    </div>
+
+</div>
 
 </body>
 </html>

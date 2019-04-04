@@ -1,56 +1,32 @@
 
 $(function () {
-    // var ocx = new $.Ocx({isHttps:sysParam.httpsflag,loadUrl:debugurl,tip:false});
-    var ocx = new $.Ocx({"isHttps": 0, "loadUrl": "", "tip": false});
-    console.log(ocx);
-
-    $('#testBtn').click(function () {
-
-        var requestData = {
-            readertype:6,
-            cmctype:0,
-            serialport:1,
-            rate:19200,
-            timeout:200,
-            cardtype:0,
-            cardnotype:1,
-            composedcardtype:0
-        } ;
-
-        requestData = JSON.stringify( requestData );
-        console.log("requestData = ");
-        console.log( requestData );
-
-        d8e.getCardSerialNum(
-            requestData,
-            $("#blank-card-search-input") );
-
-        // ocx.requestCard(
-        //     JSON.stringify( ocx.paramCard( xmlObj )),
-        //     $("#blank-card-search-input") );
-
-    });
-
-    /*
-    D8E读卡器参数
-    <?xml version="1.0"?>
-    <PARAMS>
-        <READERTYPE>6</READERTYPE> // 发卡器类型:DS-K1F100-D8E
-        <CMCTYPE>0</CMCTYPE> // 接入方式:USB
-        <SERIALPORT>1</SERIALPORT> // 串口号:COM1
-        <RATE>19200</RATE> // 波特率
-        <TIMEOUT>200</TIMEOUT> // 读卡间隔:毫秒
-        <BEEP>undefined</BEEP> // 蜂鸣声
-        <CARDTYPE>0</CARDTYPE> // 卡类型:0-其他,1-EM卡
-        <CARDNOTYPE>0</CARDNOTYPE> // 读卡方式:0-读序列号,1-读自定义卡号
-        <COMPOSEDCARDTYPE>0</COMPOSEDCARDTYPE> // 卡号类型:0-常规,1-韦根
-    </PARAMS>
-    */
-
+    setTimeout("d8e.init()",500);
 });
 
 
 var d8e = {};
+
+d8e.initParam = {
+
+    readertype:6,
+    cmctype:0,
+    serialport:1,
+    rate:19200,
+    timeout:200,
+    cardtype:0,
+    cardnotype:1,
+    composedcardtype:0
+} ;
+
+d8e.init = function(){
+
+    d8e.httpService.getCardNum(
+        d8e.httpService.getCardInfoUrl,
+        JSON.stringify( d8e.initParam )
+    );
+};
+
+
 
 d8e.cardSerialNumOutput = 'blank-card-search-input';
 
@@ -58,34 +34,9 @@ d8e.httpService = {};
 
 d8e.httpService.url = 'http://127.0.0.1:4320';
 
-d8e.httpService.getCardInfo = d8e.httpService.url + '/plugin/service/getcardinfo?r=' + Math.random() ;
+d8e.httpService.getCardInfoUrl = d8e.httpService.url + '/plugin/service/getcardinfo?r=' + Math.random() ;
 
-d8e.httpService.request = function ( url, data, callback, obj ) {
-
-    let output = $('#'+ d8e.cardSerialNumOutput);
-    output.val('');
-
-    // $.getJSON( url,data,function( response, status, xhr ){
-    //     var serialNum = $.parseJSON( response.data ).number ;
-    //     output.val( serialNum );
-    // });
-
-    // $.post({
-    //     // type: 'post',
-    //     dataType: "json",
-    //     url: url,
-    //     data:data,
-    //     success: function( response ) {
-    //         if(response && response.data ){
-    //             var serialNum = $.parseJSON( response.data ).number ;
-    //             $('#'+ d8e.cardSerialNumOutput).val( serialNum );
-    //         }
-    //
-    //     },
-    //     error:function(XMLHttpRequest, textStatus, errorThrown){
-    //         _this.installHttpServer();
-    //     }
-    // })
+d8e.httpService.getCardNum = function ( url, data ) {
 
     var xmlHttp = null;
 
@@ -100,10 +51,10 @@ d8e.httpService.request = function ( url, data, callback, obj ) {
 
         xmlHttp.open("POST", url, false);
         xmlHttp.send( data );
-        // document.write( xmlHttp.responseText );
         var serialNum = $.parseJSON( xmlHttp.responseText ).data ;
         var serialNum = $.parseJSON( serialNum ).number ;
-        output.val( serialNum );
+        $('#cardSerialNum_panel').html( '卡号：' + serialNum );
+        $('div#reload').show();
     }
     else {
         alert("Your browser does not support XMLHTTP.");
