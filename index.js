@@ -1,5 +1,13 @@
 
 $(function () {
+
+    if (!!window.MSInputMethodContext && !!document.documentMode) {
+        browserName = "IE11";
+        $('#cardSerialNum_panel').html( '检测到 IE11 浏览器，请刷卡 ...');
+    }else{
+        $('#cardSerialNum_panel').html( '浏览器版本错误，当前 IE 客户端版本不是 IE11。');
+        return;
+    }
     setTimeout("d8e.init()",500);
 });
 
